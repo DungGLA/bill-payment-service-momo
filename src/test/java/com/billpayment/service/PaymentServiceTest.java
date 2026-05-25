@@ -1,6 +1,7 @@
 package com.billpayment.service;
 
 import com.billpayment.enumeric.BillState;
+import com.billpayment.enumeric.PaymentStatus;
 import com.billpayment.model.*;
 import com.billpayment.storage.BillStorage;
 import com.billpayment.storage.PaymentStorage;
@@ -135,5 +136,47 @@ public class PaymentServiceTest {
         );
 
         assertTrue(ex.getMessage().contains("Bill not found:"));
+    }
+
+    @Test
+    void shouldReturnCorrectPaymentStatus() {
+
+        Payment payment = new Payment(
+                1,
+                1L,
+                100,
+                LocalDate.now(),
+                PaymentStatus.PENDING
+        );
+
+        paymentStorage.save(payment);
+
+        List<Payment> result = paymentService.getPaymentHistory();
+
+        assertEquals(PaymentStatus.PENDING, result.get(0).getStatus());
+    }
+
+    @Test
+    void shouldReturnAllPaymentHistory() {
+
+        // given
+        Payment p1 = new Payment(1, 1L, 100,
+                LocalDate.of(2026, 10, 1),
+                PaymentStatus.PROCESSED);
+
+        Payment p2 = new Payment(2, 2L, 200,
+                LocalDate.of(2026, 10, 2),
+                PaymentStatus.PENDING);
+
+        paymentStorage.save(p1);
+        paymentStorage.save(p2);
+
+        // when
+        List<Payment> result = paymentService.getPaymentHistory();
+
+        // then
+        assertEquals(2, result.size());
+        assertTrue(result.contains(p1));
+        assertTrue(result.contains(p2));
     }
 }
