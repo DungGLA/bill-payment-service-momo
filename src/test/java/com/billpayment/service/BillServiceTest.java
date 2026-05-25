@@ -120,4 +120,45 @@ public class BillServiceTest {
 
         assertEquals(2, result.size());
     }
+
+    @Test
+    void shouldReturnBillsSortedByDueDate() {
+
+        billStorage.save(new Bill(1, "A", 100,
+                LocalDate.of(2026, 10, 10), "EVN"));
+
+        billStorage.save(new Bill(2, "B", 100,
+                LocalDate.of(2026, 10, 5), "WATER"));
+
+        billStorage.save(new Bill(3, "C", 100,
+                LocalDate.of(2026, 10, 1), "NET"));
+
+        List<Bill> result = billService.getBillsSortedByDueDate();
+
+        assertEquals(3, result.size());
+
+        assertEquals(3, result.get(0).getId()); // earliest date
+        assertEquals(2, result.get(1).getId());
+        assertEquals(1, result.get(2).getId());
+    }
+
+    @Test
+    void shouldExcludePaidBills() {
+
+        Bill b1 = new Bill(1, "A", 100,
+                LocalDate.of(2026, 10, 10), "EVN");
+
+        Bill b2 = new Bill(2, "B", 100,
+                LocalDate.of(2026, 10, 5), "WATER");
+
+        b2.markPaid(); // simulate paid
+
+        billStorage.save(b1);
+        billStorage.save(b2);
+
+        List<Bill> result = billService.getBillsSortedByDueDate();
+
+        assertEquals(1, result.size());
+        assertEquals(1, result.get(0).getId());
+    }
 }
