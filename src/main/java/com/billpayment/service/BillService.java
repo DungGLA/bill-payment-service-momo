@@ -3,6 +3,7 @@ package com.billpayment.service;
 import com.billpayment.model.Bill;
 import com.billpayment.storage.BillStorage;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class BillService {
@@ -43,5 +44,13 @@ public class BillService {
 
     public List<Bill> searchByProvider(String provider) {
         return billStorage.findByProvider(provider);
+    }
+
+    public List<Bill> getBillsSortedByDueDate() {
+        return billStorage.findAll()
+                .stream()
+                .filter(b -> b.getState() != com.billpayment.enumeric.BillState.PAID)
+                .sorted(Comparator.comparing(Bill::getDueDate))
+                .toList();
     }
 }

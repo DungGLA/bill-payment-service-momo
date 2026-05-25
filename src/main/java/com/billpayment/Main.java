@@ -37,6 +37,8 @@ public class Main {
 
         registry.register("PAY", new PayCommand(paymentService));
 
+        registry.register("DUE_DATE", new DueDateCommand(billService));
+
         System.out.println("Bill payment service start!");
         Scanner scanner = new Scanner(System.in);
         while (true) {
