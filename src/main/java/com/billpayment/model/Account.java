@@ -12,6 +12,13 @@ public class Account {
         this.balance += amount;
     }
 
+    public void deduct(long amount) {
+        if (balance < amount)
+            throw new IllegalStateException("Not enough fund");
+
+        balance -= amount;
+    }
+
     public long getBalance() {
         return balance;
     }

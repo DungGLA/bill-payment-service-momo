@@ -1,17 +1,12 @@
 package com.billpayment;
 
-import com.billpayment.cli.CashInCommand;
-import com.billpayment.cli.Command;
-import com.billpayment.cli.CommandRegistry;
-import com.billpayment.cli.CreateBillCommand;
-import com.billpayment.cli.ViewBillCommand;
-import com.billpayment.cli.UpdateBillCommand;
-import com.billpayment.cli.DeleteBillCommand;
-import com.billpayment.cli.SearchBillCommand;
+import com.billpayment.cli.*;
 import com.billpayment.model.Account;
 import com.billpayment.service.AccountService;
 import com.billpayment.service.BillService;
+import com.billpayment.service.PaymentService;
 import com.billpayment.storage.BillStorage;
+import com.billpayment.storage.PaymentStorage;
 
 import java.util.Scanner;
 
@@ -22,6 +17,9 @@ public class Main {
 
         BillStorage billStorage = new BillStorage();
         BillService billService = new BillService(billStorage);
+
+        PaymentStorage paymentStorage = new PaymentStorage();
+        PaymentService paymentService = new PaymentService(account, billStorage, paymentStorage);
 
         CommandRegistry registry = new CommandRegistry();
 
@@ -36,6 +34,8 @@ public class Main {
         registry.register("DELETE_BILL", new DeleteBillCommand(billService));
 
         registry.register("SEARCH_BILL_BY_PROVIDER", new SearchBillCommand(billService));
+
+        registry.register("PAY", new PayCommand(paymentService));
 
         System.out.println("Bill payment service start!");
         Scanner scanner = new Scanner(System.in);
