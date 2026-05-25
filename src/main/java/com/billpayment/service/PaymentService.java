@@ -95,4 +95,8 @@ public class PaymentService {
             System.out.println("Payment completed. Current balance: " + account.getBalance());
         }
     }
+
+    public List<Payment> getPaymentHistory() {
+        return paymentStorage.findAll();
+    }
 }

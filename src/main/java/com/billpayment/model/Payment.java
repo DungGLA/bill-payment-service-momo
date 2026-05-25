@@ -23,4 +23,24 @@ public class Payment {
     public long getBillId() {
         return billId;
     }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    public void markProcessed() {
+        this.status = PaymentStatus.PROCESSED;
+    }
+
+    public void markFailed() {
+        this.status = PaymentStatus.FAILED;
+    }
 }

@@ -35,7 +35,10 @@ public class Main {
 
         registry.register("SEARCH_BILL_BY_PROVIDER", new SearchBillCommand(billService));
 
+        // PAYMENT
         registry.register("PAY", new PayCommand(paymentService));
+        registry.register("LIST_PAYMENT", new ListPaymentCommand(paymentService));
+        registry.register("SCHEDULE", new ScheduleCommand(billService, paymentStorage));
 
         registry.register("DUE_DATE", new DueDateCommand(billService));
 

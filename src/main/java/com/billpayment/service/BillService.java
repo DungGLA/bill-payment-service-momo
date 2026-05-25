@@ -1,5 +1,6 @@
 package com.billpayment.service;
 
+import com.billpayment.enumeric.BillState;
 import com.billpayment.model.Bill;
 import com.billpayment.storage.BillStorage;
 
@@ -52,5 +53,10 @@ public class BillService {
                 .filter(b -> b.getState() != com.billpayment.enumeric.BillState.PAID)
                 .sorted(Comparator.comparing(Bill::getDueDate))
                 .toList();
+    }
+
+    public Bill findById(long id) {
+        return billStorage.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Bill not found"));
     }
 }
