@@ -12,6 +12,10 @@
 ```bash
 mvn clean install
 
+## Run project
+```bash
+java -cp target/classes com.billpayment.app.Application
+```
 
 
 1. Cash In
