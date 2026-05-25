@@ -1,0 +1,63 @@
+# ⚙️ Requirements
+
+- Java 17+
+- Maven 3+
+- Linux / macOS / Windows
+
+---
+
+# 🚀 Build & Run
+
+## Build project
+```bash
+mvn clean install
+
+
+
+1. Cash In
+CASH_IN <amount>
+Ex: CASH_IN 1000000
+
+2. Create Bill
+CREATE_BILL <id> <type> <amount> <dueDate(dd/MM/yyyy)> <provider>
+Ex: CREATE_BILL 1 ELECTRIC 200000 25/10/2026 EVN
+
+3. List Bills
+LIST_BILL
+
+4. Update Bill
+UPDATE_BILL <id> <type> <amount> <dueDate> <provider>
+Ex: UPDATE_BILL 1 3000000 EVN 2026-11-01
+
+5. Delete Bill
+DELETE_BILL <id>
+
+6. Search Bill by Provider
+SEARCH_BILL_BY_PROVIDER
+Ex: SEARCH_BILL_BY_PROVIDER EVN
+
+7. Pay Bill
+Single payment
+PAY <billId>
+Ex: PAY 1
+
+Multiple payment
+PAY <id1> <id2> <id3>
+Ex: PAY 1 2 3
+
+8. Schedule Payment
+SCHEDULE <billId> <dd/MM/yyyy>
+Ex: SCHEDULE 2 28/10/2026
+
+- Create payment with status PENDING
+- A cronjob will run every day at 00:00 to check if there are any PENDING payments with due date equal to current date, if yes, the payment will be processed and status will be updated to PAID
+
+9. List Payment History
+LIST_PAYMENT
+
+10. Bills by Due Date
+DUE_DATE
+
+11. Exit
+EXIT
+```
